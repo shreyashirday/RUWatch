@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar ns="" xmlns:android="http://schemas.android.com/apk/res/android" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+    <start>
+        <element name="manifest">
+            <attribute name="package">
+                <data type="NCName"/>
+            </attribute>
+            <element name="uses-feature">
+                <attribute name="android:name">
+                    <data type="NCName"/>
+                </attribute>
+            </element>
+            <element name="application">
+                <attribute name="android:allowBackup">
+                    <data type="boolean"/>
+                </attribute>
+                <attribute name="android:icon"/>
+                <attribute name="android:label"/>
+                <attribute name="android:theme"/>
+                <element name="activity">
+                    <attribute name="android:label"/>
+                    <attribute name="android:name">
+                        <data type="NMTOKEN"/>
+                    </attribute>
+                    <element name="intent-filter">
+                        <element name="action">
+                            <attribute name="android:name">
+                                <data type="NCName"/>
+                            </attribute>
+                        </element>
+                        <element name="category">
+                            <attribute name="android:name"/>
+                        </element>
+                    </element>
+                </element>
+            </element>
+        </element>
+    </start>
+</grammar>

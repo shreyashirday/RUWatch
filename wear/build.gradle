@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 
-
 android {
     compileSdkVersion 20
     buildToolsVersion "20.0.0"
@@ -24,6 +23,9 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.google.android.support:wearable:+'
     compile 'com.google.android.gms:play-services-wearable:+'
+<<<<<<< HEAD
+=======
     compile 'com.google.code.gson:gson:2.2.+'
 
+>>>>>>> origin/master
 }
