@@ -81,7 +81,7 @@ public class MyActivity extends ActionBarActivity {
                     i.putExtra("id",user.getUserId());
                     userTable.where().field("id").eq(user.getUserId()).execute(new TableQueryCallback<User>() {
                         @Override
-                        public void onCompleted(List<User> users, int int, Exception e, ServiceFilterResponse serviceFilterResponse) {
+                        public void onCompleted(List<User> users, int in, Exception e, ServiceFilterResponse serviceFilterResponse) {
                             if(e == null){
                                 if(users.size() == 0){
                                     Log.d("Oops!","No users with that id found");
