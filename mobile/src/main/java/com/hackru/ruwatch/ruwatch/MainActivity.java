@@ -19,6 +19,8 @@ import java.util.List;
 import android.content.*;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
+import java.nio.*;
+import java.net.*;
 
 /**
  * Created by shreyashirday on 10/12/14.
@@ -32,7 +34,8 @@ public class MainActivity extends Activity {
     TextView t,t2,t3;
     boolean start,startValue;
     int benchmark;
-    String nodeId,message;
+    String nodeId;
+    int[] values = new int[4];
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -99,7 +102,10 @@ public class MainActivity extends Activity {
                     @Override
                     public void onCompleted(List<User> users, int i, Exception e, ServiceFilterResponse serviceFilterResponse) {
                            myUser = users.get(0);
-                        message = myUser.getId();
+                            values[0] = myUser.getAge();
+                            values[1] = myUser.getWeight();
+                            values[2] = myUser.getGoal();
+                            values[3] = myUser.getGender();
                             int burned = myUser.getBurned();
                             t.setText("Calories Burned " + burned);
                             int donated = myUser.getDonated();
@@ -141,12 +147,16 @@ public class MainActivity extends Activity {
 
     private void sendToast() {
         final GoogleApiClient client = getGoogleApiClient(this);
+        ByteBuffer byteBuffer = ByteBuffer.allocate(values.length *4);
+        IntBuffer intBuffer = byteBuffer.asIntBuffer();
+        intBuffer.put(values);
+       final byte[] array = byteBuffer.array();
         if (nodeId !=null) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     client.blockingConnect(1000,TimeUnit.MILLISECONDS);
-                    Wearable.MessageApi.sendMessage(client,nodeId,"/message",message.getBytes());
+                    Wearable.MessageApi.sendMessage(client,nodeId,"/message",array);
                     client.disconnect();
                 }
             }).start();

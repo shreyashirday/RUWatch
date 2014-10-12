@@ -44,6 +44,8 @@ public class User {
     @SerializedName("finalDate")
     public Date mFinalDate;
 
+    @SerializedName("gender")
+    public int mGender;
 
 
     public User() {
@@ -139,5 +141,13 @@ public class User {
 
     public Date setFinalDate() { return mFinalDate; }
 
+
+    public void setGender(int g){
+        mGender = g;
+    }
+
+    public int getGender(){
+        return  mGender;
+    }
 
 }

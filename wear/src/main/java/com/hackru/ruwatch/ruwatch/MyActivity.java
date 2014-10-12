@@ -16,10 +16,13 @@ import android.util.*;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
+import  com.microsoft.windowsazure.mobileservices.*;
 import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.WearableListenerService;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.IntBuffer;
 import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
@@ -36,14 +39,14 @@ public class MyActivity extends Activity implements SensorEventListener {
 
     private int calories;
 
-    private User user;
+    //private User user;
     private String userID; // Data, read from Facebook...
     private boolean isMale;
     private int age;
     private int weight;
     private int goalCalories;
-    MobileServiceClient mClient = new MobileServiceClient("MobileServiceURL","AppKey",this);
-    MobileServiceTable<ToDoItem> mToDoTable = mClient.getTable(ToDoItem.class);
+    //MobileServiceClient mClient = new MobileServiceClient("MobileServiceURL","AppKey",this);
+    //MobileServiceTable<ToDoItem> mToDoTable = mClient.getTable(ToDoItem.class);
 
     // What is called each time the Handler "ticks"
     Runnable runnable = new Runnable() {
@@ -76,10 +79,10 @@ public class MyActivity extends Activity implements SensorEventListener {
         // set up message receiver
         IntentFilter messageFilter = new IntentFilter(Intent.ACTION_SEND);
         ListenerService listenerService= new ListenerService();
-        listenerService.onMessageReceived();
+
 
         // getting the data from online using userID
-        mToDoTable.where().field("userID").eq(false)
+       /* mToDoTable.where().field("userID").eq(false)
                 .execute(new TableQueryCallback<ToDoItem>() {
                     public void onCompleted(List<ToDoItem> result,
                                             int count,
@@ -89,6 +92,7 @@ public class MyActivity extends Activity implements SensorEventListener {
                         }
                     }
                 });
+                */
     }
 
     // Sensor methods and stuff
@@ -166,21 +170,18 @@ public class MyActivity extends Activity implements SensorEventListener {
         @Override
         public void onMessageReceived(MessageEvent messageEvent) {
             if (messageEvent.getPath().equals("/message")) {
-                final String message = new String(messageEvent.getData());
+               IntBuffer intBuffer = ByteBuffer.wrap(messageEvent.getData()).order(ByteOrder.BIG_ENDIAN).asIntBuffer();
+                int[] values = new int[intBuffer.remaining()];
+                intBuffer.get(values);
+                age = values[0];
+                weight = values[1];
+                goalCalories = values[2];
 
-                userID = message;
             } else {
                 super.onMessageReceived(messageEvent);
             }
         }
     }
 
-    public class ToDoItem {
-        private String id;
-        private String text;
-        private Boolean complete;
-        private Date due;
-        private Integer duration;
 
-    }
 }

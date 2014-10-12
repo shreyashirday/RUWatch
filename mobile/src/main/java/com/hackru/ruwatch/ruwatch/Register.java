@@ -17,7 +17,8 @@ public class Register extends Activity {
     EditText a,w,go,wa;
     Button d;
     User newUser;
-
+    CheckBox m,f;
+    int gen = 0;
     MobileServiceClient mClient;
     MobileServiceTable<User> userTable;
     @Override
@@ -30,6 +31,41 @@ public class Register extends Activity {
         w = (EditText)findViewById(R.id.editText2);
         go = (EditText)findViewById(R.id.editText3);
         wa = (EditText)findViewById(R.id.editText4);
+        m = (CheckBox)findViewById(R.id.checkbox);
+        f = (CheckBox)findViewById(R.id.checkBox2);
+
+        m.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(m.isChecked()) {
+                    m.setChecked(false);
+                    f.setChecked(true);
+                    gen = 2;
+                }else{
+                    f.setChecked(false);
+                    m.setChecked(true);
+                    gen = 1;
+                }
+            }
+        });
+
+        f.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(f.isChecked()){
+                    m.setChecked(true);
+                    f.setChecked(false);
+                    gen = 1;
+                }else{
+                    f.setChecked(true);
+                    m.setChecked(false);
+                    gen = 2;
+                }
+            }
+        });
+
+
+
         ArrayAdapter<CharSequence> adapter= ArrayAdapter.createFromResource(this,
                 R.array.benchmarks, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -61,6 +97,7 @@ public class Register extends Activity {
 
                                 newUser = new User();
                                 newUser.setId(mobileServiceUser.getUserId());
+                                newUser.setGender(gen);
                                 newUser.setAge(Integer.parseInt(a.getText().toString()));
                                 newUser.setWeight(Integer.parseInt(w.getText().toString()));
                                 newUser.setGoal(Integer.parseInt(go.getText().toString()));
