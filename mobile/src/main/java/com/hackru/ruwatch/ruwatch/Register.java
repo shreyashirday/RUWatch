@@ -1,5 +1,4 @@
 package com.hackru.ruwatch.ruwatch;
-import com.google.gson.Gson;
 import com.microsoft.windowsazure.mobileservices.*;
 import android.app.*;
 import android.util.*;
@@ -25,7 +24,7 @@ public class Register extends Activity {
     public void onCreate(Bundle savedInstanceState){
     super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
-        d = (Button)findViewById(R.id.button);
+        d = (Button)findViewById(R.id.startBtn);
         sp = (Spinner)findViewById(R.id.spinner);
         a = (EditText)findViewById(R.id.editText);
         w = (EditText)findViewById(R.id.editText2);

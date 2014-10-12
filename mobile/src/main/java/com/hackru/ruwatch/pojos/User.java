@@ -32,6 +32,18 @@ public class User {
     @SerializedName("donated")
     public int mDonated;
 
+    @SerializedName("goalCompleted")
+    public boolean mGoalCompleted;
+
+    @SerializedName("start")
+    public boolean mStart;
+
+    @SerializedName("initialDate")
+    public Date mInitialDate;
+
+    @SerializedName("finalDate")
+    public Date mFinalDate;
+
 
 
     public User() {
@@ -110,4 +122,22 @@ public class User {
     public int getGoal(){
         return  mGoal;
     }
+
+    public void setGoalCompleted(boolean gC) { mGoalCompleted = gC; }
+
+    public boolean getGoalCompleted() { return mGoalCompleted; }
+
+    public void setStart(boolean s) { mStart = s; }
+
+    public boolean getStart() { return mStart; }
+
+    public void setInitialDate(Date iD) { mInitialDate = iD; }
+
+    public Date getInitialDate() { return mInitialDate; }
+
+    public void setFinalDate(Date iD) { mFinalDate = iD; }
+
+    public Date setFinalDate() { return mFinalDate; }
+
+
 }
