@@ -61,6 +61,7 @@ public class Register extends Activity {
                             if (e == null) {
 
                                 newUser = new User();
+                                newUser.setId(mobileServiceUser.getUserId());
                                 newUser.setAge(Integer.parseInt(a.getText().toString()));
                                 newUser.setWeight(Integer.parseInt(w.getText().toString()));
                                 newUser.setGoal(Integer.parseInt(go.getText().toString()));
@@ -73,6 +74,9 @@ public class Register extends Activity {
                                         if (e == null) {
 
                                             Log.d("Success", "User saved!");
+                                            Intent i = new Intent(getApplicationContext(),MainActivity.class);
+                                            i.putExtra("id",entity.getId());
+                                            startActivity(i);
 
                                         } else {
                                             Log.e("Error", e.getMessage());

@@ -7,6 +7,8 @@ import android.view.MenuItem;
 import com.microsoft.windowsazure.mobileservices.*;
 import android.content.*;
 import java.net.*;
+import java.util.List;
+
 import android.util.*;
 import android.view.View;
 import android.widget.*;
@@ -75,11 +77,29 @@ public class MyActivity extends ActionBarActivity {
             public void onCompleted(MobileServiceUser user, Exception exception, ServiceFilterResponse response){
                 if(exception == null){
                     Log.d("Success","User was logged in via facebook");
+                   final Intent i = new Intent(getApplicationContext(),MainActivity.class);
+                    i.putExtra("id",user.getUserId());
+                    userTable.where().field("id").eq(user.getUserId()).execute(new TableQueryCallback<User>() {
+                        @Override
+                        public void onCompleted(List<User> users, int int, Exception e, ServiceFilterResponse serviceFilterResponse) {
+                            if(e == null){
+                                if(users.size() == 0){
+                                    Log.d("Oops!","No users with that id found");
+                                }
+                                else{
+                                    Log.d("Success","Corresponding user found!");
+                                    startActivity(i);
+                                }
+                            }
+                            else{
+                                Log.e("Error", e.getMessage());
 
-
+                            }
+                        }
+                    });
                 }
                 else{
-                    Log.e("Error",exception.getMessage());
+                    Log.e("Error", exception.getMessage());
                 }
             }
 

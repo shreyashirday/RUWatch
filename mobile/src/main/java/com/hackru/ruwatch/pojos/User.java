@@ -26,6 +26,13 @@ public class User {
     @SerializedName("goal")
     public int mGoal;
 
+    @SerializedName("burned")
+    public  int mBurned;
+
+    @SerializedName("donated")
+    public int mDonated;
+
+
 
     public User() {
 
@@ -46,6 +53,22 @@ public class User {
 
     public String getId(){
         return mId;
+    }
+
+    public  void setBurned(int bur){
+        mBurned = bur;
+    }
+
+    public int getBurned(){
+        return  mBurned;
+    }
+
+    public void setDonated(int don){
+        mDonated = don;
+    }
+
+    public  int getDonated(){
+        return  mDonated;
     }
 
     public void setAge(int age){
