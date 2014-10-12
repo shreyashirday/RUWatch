@@ -4,16 +4,41 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-
+import com.microsoft.windowsazure.mobileservices.*;
+import android.content.Context;
+import java.net.*;
+import android.util.*;
+import android.view.View;
+import android.widget.*;
+import com.hackru.ruwatch.pojos.*;
 
 public class MyActivity extends ActionBarActivity {
-
+    private MobileServiceClient mClient;
+     private MobileServiceTable<User> userTable;
+    Context ctx;
+    User newUser;
+    Button si,su;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
-    }
+        ctx = this;
+        try{
+            mClient = new MobileServiceClient("https://doordonate.azure-mobile.net/","iKCHzhhVbBrqXpsAJZCReWLvKYkNNY53",ctx);
+            userTable = mClient.getTable(User.class);
+        }
+        catch(MalformedURLException e){
 
+        }
+        su = (Button)findViewById(R.id.button2);
+        su.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                authenticate();
+            }
+        });
+
+        }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -32,5 +57,24 @@ public class MyActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private void authenticate(){
+
+        mClient.login(MobileServiceAuthenticationProvider.Facebook, new UserAuthenticationCallback() {
+            @Override
+            public void onCompleted(MobileServiceUser user, Exception exception, ServiceFilterResponse response){
+                if(exception == null){
+                    Log.d("Success","User was logged in via facebook");
+
+
+                }
+                else{
+                    Log.e("Error",exception.getMessage());
+                }
+            }
+
+        });
     }
 }
