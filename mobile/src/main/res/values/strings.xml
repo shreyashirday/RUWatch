@@ -4,5 +4,11 @@
     <string name="app_name">RUWatch</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string-array name="benchmarks">
+        <item>Daily</item>
+        <item>Weekly</item>
+        <item>Monthly</item>
+
+    </string-array>
 
 </resources>
