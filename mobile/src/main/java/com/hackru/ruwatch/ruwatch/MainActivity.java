@@ -38,7 +38,7 @@ public class MainActivity extends Activity {
     int[] values = new int[4];
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(final Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mainactivity);
         startBtn = (Button) findViewById(R.id.startBtn);
@@ -106,6 +106,7 @@ public class MainActivity extends Activity {
                             values[1] = myUser.getWeight();
                             values[2] = myUser.getGoal();
                             values[3] = myUser.getGender();
+                            sendToast();
                             int burned = myUser.getBurned();
                             t.setText("Calories Burned " + burned);
                             int donated = myUser.getDonated();
@@ -156,7 +157,7 @@ public class MainActivity extends Activity {
                 @Override
                 public void run() {
                     client.blockingConnect(1000,TimeUnit.MILLISECONDS);
-                    Wearable.MessageApi.sendMessage(client,nodeId,"/message",array);
+                    Wearable.MessageApi.sendMessage(client, nodeId, "/message", array);
                     client.disconnect();
                 }
             }).start();

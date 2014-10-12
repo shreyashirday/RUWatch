@@ -41,7 +41,7 @@ public class MyActivity extends Activity implements SensorEventListener {
 
     //private User user;
     private String userID; // Data, read from Facebook...
-    private boolean isMale;
+    private int gender;
     private int age;
     private int weight;
     private int goalCalories;
@@ -154,7 +154,7 @@ public class MyActivity extends Activity implements SensorEventListener {
         button.setVisibility(View.INVISIBLE); // Hide button
         txt.setTextSize((float) 24);
 
-        if (isMale) { // Calculate the calories burned
+        if (gender == 1) { // Calculate the calories burned
             calories = (int) ((-55.0969 + (0.6309 * heartRate) + (0.1988 * weight) + (0.2017 * age)) / 4.184) * 60 * seconds;
         } else {
             calories = (int) ((-20.4022 + (0.4472 * heartRate) - (0.1263 * weight) + (0.074 * age)) / 4.184) * 60 * seconds;
@@ -176,6 +176,7 @@ public class MyActivity extends Activity implements SensorEventListener {
                 age = values[0];
                 weight = values[1];
                 goalCalories = values[2];
+                gender = values[3];
 
             } else {
                 super.onMessageReceived(messageEvent);
