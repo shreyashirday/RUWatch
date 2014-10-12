@@ -32,7 +32,7 @@ public class MyActivity extends ActionBarActivity {
         catch(MalformedURLException e){
 
         }
-        su = (Button)findViewById(R.id.button);
+        su = (Button)findViewById(R.id.startBtn);
         su.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){

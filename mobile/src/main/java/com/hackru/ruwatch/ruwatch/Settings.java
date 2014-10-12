@@ -6,10 +6,10 @@ import android.view.*;
 import android.util.Log;
 import com.microsoft.windowsazure.mobileservices.*;
 import com.hackru.ruwatch.pojos.*;
-import android.util.*;
-import android.content.*;
+
 import java.net.MalformedURLException;
 import java.util.List;
+
 
 /**
  * Created by Ben on 10/12/14.
@@ -30,7 +30,7 @@ public class Settings extends Activity {
         Bundle extras = getIntent().getExtras();
         final Settings that = this;
 
-        bDone = (Button)findViewById(R.id.button);
+        bDone = (Button)findViewById(R.id.startBtn);
         age = (EditText)findViewById(R.id.editText);
         weight = (EditText)findViewById(R.id.editText2);
         goal = (EditText)findViewById(R.id.editText3);
