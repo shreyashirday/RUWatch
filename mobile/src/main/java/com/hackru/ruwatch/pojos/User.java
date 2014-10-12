@@ -8,70 +8,83 @@ import java.util.*;
 public class User {
 
 
-    @SerializedName("userId")
-    public static String mId;
+    @SerializedName("id")
+    public String mId;
 
     @SerializedName("age")
-    public static int mAge;
+    private int mAge;
 
     @SerializedName("weight")
-    public static int mWeight;
+    public int mWeight;
 
     @SerializedName("benchmark")
-    public static int mBm;
+    public int mBm;
 
     @SerializedName("wager")
-    public static int mWager;
+    public int mWager;
 
     @SerializedName("goal")
-    public static int mGoal;
+    public int mGoal;
 
 
-
-    public User(String id){
-        mId = id;
-
-
+    public User() {
 
     }
 
-    public static void setAge(int age){
+    public User(String id, int age, int weight, int benchmark, int wager, int goal){
+        this.mId = id;
+        this.mAge = age;
+        this.mWeight = weight;
+        this.mBm = benchmark;
+        this.mWager = wager;
+        this.mGoal = goal;
+    }
+
+    public void setId(String i){
+        mId = i;
+    }
+
+    public String getId(){
+        return mId;
+    }
+
+    public void setAge(int age){
         mAge = age;
     }
 
-    public static int getAge(){
+    public int getAge(){
         return mAge;
     }
 
-    public static void setWeight(int weight){
+    public void setWeight(int weight){
         mWeight = weight;
     }
 
-    public static int getWeight(){
+    public int getWeight(){
         return  mWeight;
     }
 
-    public static void setBenchmark(int b){
+    public void setBenchmark(int b){
         mBm = b;
     }
 
-    public static int getBenchmark(){
+    public int getBenchmark(){
         return  mBm;
     }
 
-    public static void setWager(int wager){
+    public void setWager(int wager){
         mWager = wager;
     }
 
-    public static int getWager(){
+    public int getWager(){
         return mWager;
     }
 
-    public static void setGoal(int g){
+    public void setGoal(int g){
         mGoal = g;
     }
 
-    public static int getGoal(){
+    public int getGoal(){
         return  mGoal;
     }
 }

@@ -1,4 +1,5 @@
 package com.hackru.ruwatch.ruwatch;
+import com.google.gson.Gson;
 import com.microsoft.windowsazure.mobileservices.*;
 import android.app.*;
 import android.util.*;
@@ -17,21 +18,29 @@ public class Register extends Activity {
     EditText a,w,go,wa;
     Button d;
     User newUser;
-    ArrayAdapter<CharSequence> adapter;
+
     MobileServiceClient mClient;
     MobileServiceTable<User> userTable;
     @Override
     public void onCreate(Bundle savedInstanceState){
-
+    super.onCreate(savedInstanceState);
+        setContentView(R.layout.register);
         d = (Button)findViewById(R.id.button);
         sp = (Spinner)findViewById(R.id.spinner);
         a = (EditText)findViewById(R.id.editText);
         w = (EditText)findViewById(R.id.editText2);
         go = (EditText)findViewById(R.id.editText3);
         wa = (EditText)findViewById(R.id.editText4);
-       adapter = ArrayAdapter.createFromResource(this,
+        ArrayAdapter<CharSequence> adapter= ArrayAdapter.createFromResource(this,
                 R.array.benchmarks, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        if(adapter == null){
+            Log.e("Oops!","adapter is null");
+        }
+        if(sp == null){
+            Log.e("Oops!","The spinner is null");
+        }
+
         sp.setAdapter(adapter);
 
         try {
@@ -50,26 +59,29 @@ public class Register extends Activity {
                         @Override
                         public void onCompleted(MobileServiceUser mobileServiceUser, Exception e, ServiceFilterResponse serviceFilterResponse) {
                             if (e == null) {
-                                newUser = new User(mobileServiceUser.getUserId());
+
+                                newUser = new User();
                                 newUser.setAge(Integer.parseInt(a.getText().toString()));
                                 newUser.setWeight(Integer.parseInt(w.getText().toString()));
                                 newUser.setGoal(Integer.parseInt(go.getText().toString()));
                                 newUser.setWager(Integer.parseInt(wa.getText().toString()));
                                 newUser.setBenchmark(sp.getSelectedItemPosition() + 1);
+
                                 userTable.insert(newUser, new TableOperationCallback<User>() {
                                     @Override
                                     public void onCompleted(User entity, Exception e, ServiceFilterResponse serviceFilterResponse) {
-                                        if(e==null){
+                                        if (e == null) {
 
-                                        }
-                                        else{
-                                            Log.e("Error",e.getMessage());
+                                            Log.d("Success", "User saved!");
+
+                                        } else {
+                                            Log.e("Error", e.getMessage());
                                         }
                                     }
                                 });
 
                             } else {
-
+                                        Log.e("Error",e.getMessage());
                             }
                         }
                     });

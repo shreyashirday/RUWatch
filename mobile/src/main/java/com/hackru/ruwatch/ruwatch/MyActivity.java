@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.microsoft.windowsazure.mobileservices.*;
-import android.content.Context;
+import android.content.*;
 import java.net.*;
 import android.util.*;
 import android.view.View;
@@ -30,8 +30,16 @@ public class MyActivity extends ActionBarActivity {
         catch(MalformedURLException e){
 
         }
-        su = (Button)findViewById(R.id.button2);
-        su.setOnClickListener(new View.OnClickListener() {
+        su = (Button)findViewById(R.id.button);
+        su.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                ctx.startActivity(new Intent(ctx,Register.class));
+            }
+
+                              });
+        si = (Button)findViewById(R.id.button2);
+        si.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 authenticate();
