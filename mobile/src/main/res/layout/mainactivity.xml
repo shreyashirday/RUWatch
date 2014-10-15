@@ -8,11 +8,9 @@
         android:layout_height="wrap_content"
         android:text="Start"
         android:id="@+id/startBtn"
-        android:layout_marginBottom="32dp"
         android:clickable="true"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/button2"
-        android:layout_alignStart="@+id/button2" />
+        android:layout_below="@+id/button2"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -20,9 +18,8 @@
         android:text="Edit"
         android:id="@+id/button2"
         android:clickable="true"
-        android:layout_above="@+id/startBtn"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp" />
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -53,4 +50,12 @@
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="54dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Log Out"
+        android:id="@+id/logout"
+        android:layout_below="@+id/startBtn"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

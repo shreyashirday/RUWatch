@@ -38,15 +38,13 @@ public class User {
     @SerializedName("start")
     public boolean mStart;
 
-    @SerializedName("initialDate")
-    public Date mInitialDate;
+
 
     @SerializedName("finalDate")
     public Date mFinalDate;
 
     @SerializedName("gender")
     public int mGender;
-
 
     public User() {
 
@@ -133,9 +131,7 @@ public class User {
 
     public boolean getStart() { return mStart; }
 
-    public void setInitialDate(Date iD) { mInitialDate = iD; }
 
-    public Date getInitialDate() { return mInitialDate; }
 
     public void setFinalDate(Date iD) { mFinalDate = iD; }
 

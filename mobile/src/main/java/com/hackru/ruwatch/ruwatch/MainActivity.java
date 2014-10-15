@@ -28,20 +28,25 @@ import java.net.*;
 public class MainActivity extends Activity {
     MobileServiceClient mClient;
     MobileServiceTable<User> userTable;
-    Button startBtn;
+    Button startBtn,editBtn,logoutBtn;
     User myUser;
     Date finalDate = new Date();
     TextView t,t2,t3;
-    boolean start,startValue;
+    boolean startValue;
+    boolean start = false;
     int benchmark;
     String nodeId;
     int[] values = new int[4];
+    Context ctx;
 
     @Override
     public void onCreate(final Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        ctx = this;
         setContentView(R.layout.mainactivity);
         startBtn = (Button) findViewById(R.id.startBtn);
+        editBtn = (Button)findViewById(R.id.button2);
+        logoutBtn = (Button)findViewById(R.id.logout);
         t = (TextView)findViewById(R.id.textView);
         t2 = (TextView)findViewById(R.id.textView2);
         t3 = (TextView)findViewById(R.id.textView3);
@@ -53,12 +58,29 @@ public class MainActivity extends Activity {
             Log.e("Error",err.getMessage());
         }
 
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ctx,MyActivity.class));
+            }
+        });
+
+        editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),Settings.class);
+                intent.putExtra("id",myUser.getId());
+                startActivity(intent);
+            }
+        });
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Date finalDate = null;
-                if(!startValue) {
+                if(!start) {
                     start = true;
+                    startBtn.setText("Stop");
                     Calendar initialCal = Calendar.getInstance();
                     Calendar finalCal = Calendar.getInstance();
                     if (benchmark == 1) {
@@ -74,6 +96,7 @@ public class MainActivity extends Activity {
                 }
                 else{
                     start = false;
+                    startBtn.setText("Start");
                 }
 
                 if(myUser!=null){
@@ -90,10 +113,13 @@ public class MainActivity extends Activity {
                                 Log.e("Error",e.getMessage());
                             }
                         }
+
                     });
                 }
 
             }
+
+
         });
         if(extras != null){
             String token = extras.getString("id");
@@ -112,7 +138,7 @@ public class MainActivity extends Activity {
                             int donated = myUser.getDonated();
                             t2.setText("Money Donated " + donated);
                             startValue = myUser.getStart();
-                        if(!startValue){
+                        if(startValue){
                             startBtn.setText("Stop");
                         }
 
@@ -163,4 +189,45 @@ public class MainActivity extends Activity {
             }).start();
         }
     }
+
+
+
+    public class ListenerService extends WearableListenerService {
+        @Override
+        public void onMessageReceived(MessageEvent messageEvent) {
+            if (messageEvent.getPath().equals("/response")) {
+
+                    byte[] data = messageEvent.getData();
+                    int count = byteArrayToInt(data);
+                    myUser.setBurned(count);
+                    userTable.update(myUser, new TableOperationCallback<User>() {
+                        @Override
+                        public void onCompleted(User user, Exception e, ServiceFilterResponse serviceFilterResponse) {
+                            if(e == null){
+                                Log.d("Success","Received Message");
+                            }
+                            else{
+                                Log.e("Response Error",e.getMessage());
+                            }
+                        }
+                    });
+
+
+            } else {
+                super.onMessageReceived(messageEvent);
+            }
+        }
+    }
+
+    public static int byteArrayToInt(byte[] b)
+    {
+        int value = 0;
+        for (int i = 0; i < 4; i++) {
+            int shift = (4 - 1 - i) * 8;
+            value += (b[i] & 0x000000FF) << shift;
+        }
+        return value;
+    }
+
+
 }

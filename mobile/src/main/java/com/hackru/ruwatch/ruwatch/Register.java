@@ -18,7 +18,8 @@ public class Register extends Activity {
     Button d;
     User newUser;
     CheckBox m,f;
-    int gen = 0;
+   int gen = 1;
+
     MobileServiceClient mClient;
     MobileServiceTable<User> userTable;
     @Override
@@ -31,7 +32,7 @@ public class Register extends Activity {
         w = (EditText)findViewById(R.id.editText2);
         go = (EditText)findViewById(R.id.editText3);
         wa = (EditText)findViewById(R.id.editText4);
-        m = (CheckBox)findViewById(R.id.checkbox);
+        /*m = (CheckBox)findViewById(R.id.checkbox);
         f = (CheckBox)findViewById(R.id.checkBox2);
 
         m.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +64,7 @@ public class Register extends Activity {
                 }
             }
         });
-
+*/
 
 
         ArrayAdapter<CharSequence> adapter= ArrayAdapter.createFromResource(this,
@@ -103,6 +104,11 @@ public class Register extends Activity {
                                 newUser.setGoal(Integer.parseInt(go.getText().toString()));
                                 newUser.setWager(Integer.parseInt(wa.getText().toString()));
                                 newUser.setBenchmark(sp.getSelectedItemPosition() + 1);
+                                newUser.setDonated(0);
+                                newUser.setBurned(0);
+                                newUser.setGoalCompleted(false);
+                                newUser.setStart(false);
+                                newUser.setFinalDate(null);
 
                                 userTable.insert(newUser, new TableOperationCallback<User>() {
                                     @Override
